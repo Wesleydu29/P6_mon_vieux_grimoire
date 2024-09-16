@@ -3,14 +3,10 @@ const fs = require('fs');
 
 // ajout d'un livre
 exports.createBook = (req, res, next) => {
-
     const bookObject = JSON.parse(req.body.book);
-    
     const book = new Book({
         ...bookObject,
         userId: req.auth.userId,
-        ratings: [],
-        averageRating: 0,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     book.save()
@@ -65,7 +61,7 @@ exports.modifyBook = (req, res, next) => {
         .then((book) => {
             // on vient verifier si l'id  du livre correspond bien à l'utilisateur
             if (book.userId != req.auth.userId) {
-                res.status(401).json({ message: 'Not authoriezd' });
+                res.status(401).json({ message: 'Not authorized' });
             } else {
                 // si l'id correspond bien, on vient mettre à jour
                 Book.updateOne({ _id: req.params.id }, { ...bookObject, _id: req.params.id })
