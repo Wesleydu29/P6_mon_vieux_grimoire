@@ -3,9 +3,11 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 exports.signup = (req, res, next) => {
+    const password = req.body.password
+    const email = req.body.email
     const minLength = 6;
     const hasNumber = /\d/;
-    if (passeword.length < minLength) {
+    if (password.length < minLength) {
         return res.status(400).json({message : 'Le mot de passe doit contenir au minimum 6 caractères'})
     }
     if (!hasNumber.test(password)) {
@@ -47,7 +49,7 @@ exports.login = (req, res, next) => {
                             token: jwt.sign(
                                 {userId: user._id},
                                 'RANDOM_TOKEN_SECRET',
-                                {expriresIn: '24h'}
+                                {expiresIn: '24h'}
                             )
                         });
                     }
@@ -55,6 +57,7 @@ exports.login = (req, res, next) => {
                 })
                 .catch(error => {
                     res.status(500).json({ error });
+                    console.error(error)
                 })
             }
         })
