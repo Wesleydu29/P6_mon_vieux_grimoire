@@ -11,7 +11,7 @@ exports.createBook = (req, res, next) => {
         userId: req.auth.userId,
         ratings: [],
         averageRating: 0,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/opt_${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     book.save()
         .then(() => res.status(201).json({ message: 'le livre a été ajouté' }))
