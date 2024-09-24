@@ -7,7 +7,10 @@ const booksRoutes = require('./routes/books');
 const userRoutes = require('./routes/user');
 const path = require('path');
 
-mongoose.connect('mongodb+srv://wesleydu29:Porsche29@clusterw.yrad5.mongodb.net/myDatabase?retryWrites=true&w=majority',)
+// pour sécuriser la base de donnée
+const env = require('./env.json')
+
+mongoose.connect(env.URL_BDD)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(error => console.error('Connexion à MongoDB échouée :', error));
 
